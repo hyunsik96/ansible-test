@@ -23,3 +23,11 @@
       copy:
         dest: /monitorapp/aisase/service_manager/current/templates/s1.json
         content: "{{ updated_json_content | to_nice_json }}"
+
+    - name: Execute upgrade script
+      shell: "/monitorapp/aisase/service_manager/current/scripts/upgrade.sh s1  {{ new_image }}"
+      register: upgrade_output
+
+    - name: Show upgrade script output
+      debug:
+        var: upgrade_output.stdout # 스크립트의 출력 결과 확인
