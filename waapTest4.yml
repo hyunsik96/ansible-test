@@ -4,7 +4,7 @@
   become: false
   tasks:
     - name: List files in the home directory
-      command: ls -l /home/your_username
+      command: ls -l /home/monitorapp
       register: ls_output # ls 명령의 결과를 ls_output 변수에 저장
 
     - name: Show ls output
