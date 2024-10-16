@@ -1,0 +1,8 @@
+# ls_playbook.yml
+---
+- name: Run ls on 192.168.0.248
+  hosts: 192.168.0.248
+  become: false # root 권한으로 실행할 필요 없을 때 사용
+  tasks:
+    - name: List files in the home directory
+      command: ls -l /home/your_username # ls 명령어 실행 경로 설정
