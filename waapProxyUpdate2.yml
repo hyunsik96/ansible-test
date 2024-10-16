@@ -22,4 +22,4 @@
     - name: Write updated JSON back to file
       copy:
         dest: /monitorapp/aisase/service_manager/current/templates/s1.json
-        content: "{{ updated_json_content | to_nice_json }}"
+        content: "{{ updated_json_content }}"
