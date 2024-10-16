@@ -1,0 +1,25 @@
+---
+- name: Update Image in JSON file
+  hosts: all
+  become: true
+  vars:
+    new_image: "{{ new_image }}" # AWX에서 정의한 변수를 사용합니다.
+
+  tasks:
+    - name: Read existing JSON file
+      slurp:
+        src: /monitorapp/aisase/service_manager/current/templates/s1.json
+      register: json_file
+
+    - name: Convert JSON content from base64 to string
+      set_fact:
+        json_content: "{{ json_file.content | b64decode | from_json }}"
+
+    - name: Update Image in JSON content
+      set_fact:
+        updated_json_content: "{{ json_content | combine({'TaskTemplate': {'ContainerSpec': {'Image': new_image}}}, recursive=True) }}"
+
+    - name: Write updated JSON back to file
+      copy:
+        dest: /monitorapp/aisase/service_manager/current/templates/s1.json
+        content: "{{ updated_json_content | to_nice_json }}"
